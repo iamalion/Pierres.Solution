@@ -25,20 +25,17 @@ namespace SweetAndSavory.Controllers
 
     public ActionResult Create()
     {
-      ViewBag.DepartmentId = new SelectList(_db.Departments.OrderBy(d => d.DepartmentName), "DepartmentId", "DepartmentName");
-      ViewBag.PageTitle = "Create Flavor";
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Flavor flavor)
-        
-        {
-        _db.Flavors.Add(flavor);
-        _db.SaveChanges();
-        return RedirectToAction("Index");
-        }
+    public ActionResult Create(Flavor flavor)  
+    {
+    _db.Flavors.Add(flavor);
+    _db.SaveChanges();
+    return RedirectToAction("Index");
     }
+    
     public ActionResult Details(int id)
     {
         Flavor thisFlavor = _db.Flavors
@@ -99,7 +96,7 @@ namespace SweetAndSavory.Controllers
         }
       return RedirectToAction("Details", new { id = flavor.FlavorId });
     }
-    
+  }
 }
 
 
