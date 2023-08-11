@@ -11,21 +11,30 @@
 
 @if(!ViewData.ModelState.IsValid) 
 {
-  @Html.ValidationSummary("Please fix the following error(s) and then resubmit the form:") 
+    @Html.ValidationSummary("Please fix the following error(s) and then resubmit the form:") 
 }
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+@using (Html.BeginForm("RegisterAdmin", "Account", FormMethod.Post))
 {
-  @Html.LabelFor(user => user.Email)
-  @Html.TextBoxFor(user=> user.Email)
+<div class="form-container">
+    @Html.LabelFor(user => user.Email)
+    @Html.TextBoxFor(user=> user.Email)
 
-  @Html.LabelFor(user=> user.Password)
-  @Html.EditorFor(user=> user.Password)
+    @Html.LabelFor(user=> user.Password)
+    @Html.EditorFor(user=> user.Password)
 
-  @Html.LabelFor(user=> user.ConfirmPassword)
-  @Html.EditorFor(user=> user.ConfirmPassword)
+    @Html.LabelFor(user=> user.ConfirmPassword)
+    @Html.EditorFor(user=> user.ConfirmPassword)
 
-  <input type="submit" value="Register" />
+    <p>Select your role:</p>
+    <input type="radio" name="role" value="Admin" /> Admin
+    <input type="radio" name="role" value="Guest" /> Guest
+</div>
+<div class="center">
+    <input type="submit" value="Register" />
+</div>
 }
 
-<p>@Html.ActionLink("Back to accounts page", "Index")</p>
+<div class="link-container">
+    <p>@Html.ActionLink("Back to accounts page", "Index")</p>
+</div>

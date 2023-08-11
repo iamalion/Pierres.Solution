@@ -29,31 +29,36 @@ namespace SweetAndSavory.Controllers
       return View();
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Register (RegisterViewModel model)
+   [HttpPost]
+    public async Task<ActionResult> Register(RegisterViewModel model, string role)
     {
-      if (!ModelState.IsValid)
-      {
-        return View(model);
-      }
-      else
-      {
-        ApplicationUser user = new ApplicationUser { UserName = model.Email };
-        IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-        if (result.Succeeded)
+        if (!ModelState.IsValid)
         {
-          return RedirectToAction("Index");
+            return View(model);
         }
-        else
-        {
-          foreach (IdentityError error in result.Errors)
-          {
-            ModelState.AddModelError("", error.Description);
-          }
-          return View(model);
-        }
-      }
+        // if (role !="Admin" && !="Guest")
+        // {
+        //     ModelState.AddModeError("", "Please select a role.")
+        //     return View(Model);
+        // }
+        var user = new ApplicationUser { UserName = model.Email };
+        var result = await _userManager.CreateAsync(user, model.Password);
+
+    if (result.Succeeded)
+    {
+        await _userManager.AddToRoleAsync(user, role);
+        await _signInManager.SignInAsync(user, isPersistent: false);
+        return RedirectToAction("Index", "Home");
     }
+
+    foreach (var error in result.Errors)
+    {
+        ModelState.AddModelError("", error.Description);
+    }
+
+    return View(model);
+    }
+
     public ActionResult Login()
     {
       return View();
