@@ -10,6 +10,30 @@
     <link rel="icon" type="image/x-icon" href="~/img/AU_logo.png">
   </head>
   <body>
+        <header>
+        <nav>
+            <ul>
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Flavors", "Index", "Flavors")</li>
+                <li>@Html.ActionLink("Treats", "Index", "Treats")</li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>@Html.ActionLink("Add Flavor", "Create", "Flavors")</li>
+                    <li>@Html.ActionLink("Add Treat", "Create", "Treats")</li>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @using (Html.BeginForm("LogOff", "Account"))
+                    {
+                        <input type="submit" class="btn btn-primary" value="Log out"/>
+                    }
+                }
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
     @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
   </body>
 </html>

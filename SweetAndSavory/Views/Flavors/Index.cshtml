@@ -3,6 +3,7 @@
 }
 
 @using SweetAndSavory.Models;
+@using Microsoft.AspNetCore.Identity;
 
 <h1>Flavors</h1>
 
@@ -14,10 +15,21 @@
 <ul>
     @foreach (Flavor flavor in Model)
     {
-        <li>@Html.ActionLink($"{flavor.FlavorName}", "Details", new { id = flavor.FlavorId })</li>
+        <li>
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink($"{flavor.FlavorName}", "Details", new { id = flavor.FlavorId })
+            }
+            else{
+                @flavor.FlavorName
+            }
+        </li>
     }
 </ul>
 <div class="link-container">
-    <p>@Html.ActionLink("Add new flavor", "Create", "Flavors")</p>
+    @if (User.IsInRole("Admin"))
+    {
+        <p>@Html.ActionLink("Add new flavor", "Create", "Flavors")</p>
+    }
     <p>@Html.ActionLink("Return home", "Index", "Home")</p>
 </div>
