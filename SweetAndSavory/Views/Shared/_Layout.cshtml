@@ -23,10 +23,12 @@
                 }
                 @if (User.Identity.IsAuthenticated)
                 {
-                    @using (Html.BeginForm("LogOff", "Account"))
-                    {
-                        <input type="submit" class="btn btn-primary" value="Log out"/>
-                    }
+                    <li>
+                      @using (Html.BeginForm("LogOff", "Account"))
+                      {
+                          <input type="submit" class="btn btn-primary logout-btn" value="Log out"/>
+                      }
+                    </li>
                 }
             </ul>
         </nav>

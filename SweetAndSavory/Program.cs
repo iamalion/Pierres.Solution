@@ -45,9 +45,6 @@ namespace SweetAndSavory
                     policy => policy.RequireRole("Guest"));
             });
 
-            // Place these tags in controller above routes you want to protect.
-            //[Authorize(Policy = "RequireAdministratorRole")]
-            //[Authorize(Policy = "RequirePatronRole")]
 
             var app = builder.Build();
 
