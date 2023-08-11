@@ -1,27 +1,38 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SweetAndSavory.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace SweetAndSavory.Controllers
 {
-  public class FlavorsController : Controller
-  {
-    private readonly SweetAndSavoryContext _db;
-
-    public FlavorsController(SweetAndSavoryContext db)
+    [Authorize]
+    public class FlavorsController : Controller
     {
-      _db = db;
-    }
+        private readonly SweetAndSavoryContext _db;
+        private readonly UserManager<ApplicationUser> _userManager; 
 
-    public ActionResult Index()
-    {
-      List<Flavor> model = _db.Flavors.ToList();
-      ViewBag.PageTitle = "View Flavors";
-      return View(model);
-    }
+        public FlavorsController(UserManager<ApplicationUser> userManager, SweetAndSavoryContext db)
+        {
+            _userManager = userManager;
+            _db = db;
+        }
+
+        public async Task<ActionResult> Index()
+        {
+            
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+            
+            List<Flavor> model = _db.Flavors.ToList();
+            ViewBag.PageTitle = "View Flavors";
+            return View(model);
+        }
 
     public ActionResult Create()
     {

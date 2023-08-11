@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SweetAndSavory.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace SweetAndSavory
 {
@@ -21,6 +22,9 @@ namespace SweetAndSavory
                           )
                         )
                       );
+    builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<SweetAndSavoryContext>()
+            .AddDefaultTokenProviders();
 
       WebApplication app = builder.Build();
 
@@ -29,6 +33,8 @@ namespace SweetAndSavory
       app.UseStaticFiles();
 
       app.UseRouting();
+      app.UseAuthentication(); 
+      app.UseAuthorization();
 
       app.MapControllerRoute(
           name: "default",
