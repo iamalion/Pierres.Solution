@@ -11,6 +11,12 @@
   </head>
   <body>
         <header>
+          <div class="user-info">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p>Logged in as: @User.Identity.Name as @Html.Raw(User.IsInRole("Admin") ? "Admin" : "Guest")</p>
+        }
+    </div>
         <nav>
             <ul>
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
@@ -36,6 +42,7 @@
     <div class="container">
     @RenderBody()
     </div>
+    
     @RenderSection("scripts", required: false)
   </body>
 </html>
