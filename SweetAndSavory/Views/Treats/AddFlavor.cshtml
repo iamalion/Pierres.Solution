@@ -1,0 +1,29 @@
+@{
+    Layout = "_Layout";
+}
+
+@model UniversityRegistrar.Models.Treat
+
+<div class="container">
+  <h1>Add Treat to Flavor</h1>
+</div>
+<hr />
+<div class="container">
+    <h4>Add @Html.DisplayFor(model => model.TreatName) to a flavor: </h4>
+</div>
+
+@using (Html.BeginForm())
+{<div class="form-container">
+    @Html.HiddenFor(model => model.TreatId)
+    <div>
+        @Html.Label("Select Flavor: ")
+        @Html.DropDownList("FlavorId", ViewBag.FlavorId as SelectList)
+    </div>
+</div>
+<div class="center">
+    <input type="submit" value="Save" />
+</div>
+}
+<div class="link-container">
+    <p>@Html.ActionLink("Back to all treats", "Index")</p>
+</div>

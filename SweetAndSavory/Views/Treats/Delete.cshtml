@@ -1,0 +1,21 @@
+@{
+    Layout = "_Layout";
+}
+
+@model UniversityRegistrar.Models.Treat
+<div class="container">
+    <h1>Delete Treat</h1>
+</div>
+<hr />
+<div class="center">
+<h2>Are you sure you want to delete @Html.DisplayFor(model => model.TreatName)? This action cannot be undone.</h2>
+</div>
+
+@using (Html.BeginForm())
+{ <div class="center">
+    <input type="submit" value="Delete" class="button" />
+</div>
+}
+<div class="link-container">
+    <p>@Html.ActionLink("Back to all treats", "Index")</p>
+</div>

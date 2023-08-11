@@ -1,0 +1,29 @@
+@{
+    Layout = "_Layout";
+}
+
+@model SweetAndSavory.Models.Treat
+<div class="container">
+    <h1>Edit Treat</h1>
+    <h4>Editing: @Html.DisplayFor(model => model.TreatName)</h4>
+</div>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="form-container">
+        @Html.HiddenFor(model => model.TreatId)
+        <div>
+            @Html.LabelFor(model => model.TreatName)
+            @Html.EditorFor(model => model.TreatName)
+        </div>
+    </div>
+    <div class="center">
+        <input type="submit" value="Save" class="button"/>
+    </div>
+    <div class="link-container">
+        <p>@Html.ActionLink("Delete Treat", "Delete", new { id = Model.TreatId })</p>
+        <p>@Html.ActionLink("Back to all treats", "Index")</p>
+    </div>
+
+}
