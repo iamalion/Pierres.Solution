@@ -75,7 +75,7 @@ namespace SweetAndSavory.Controllers
         }
         else
         {
-          ModelState.AddModelError("", "There was an issue logging in. Please try again.");
+          ModelState.AddModelError("", "Please try again.");
           return View(model);
         }
       }
