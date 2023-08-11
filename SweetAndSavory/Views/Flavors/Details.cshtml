@@ -1,0 +1,32 @@
+@{
+    Layout = "_Layout";
+}
+@using SweetAndSavory.Models
+@model SweetAndSavory.Models.Flavor
+
+<div class="container">
+    <h1>Flavor Details</h1>
+    <h3>@Html.DisplayNameFor(model => model.FlavorName) @Html.DisplayFor(model => model.FlavorName)</h3>
+</div>
+<div class="container">
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>There are no treats with this flavor.</p>
+}
+else
+{
+  <h4>The following treats are available in this flavor:</h4>
+  <ul>
+  @foreach(FlavorTreat join in Model.JoinEntities)
+  {
+    <li>@join.Treat.TreatName</li>
+  }
+  </ul>
+}
+</div>
+<div class="link-container">
+    <p>@Html.ActionLink("Edit Flavor", "Edit", new { id = Model.FlavorId })</p>
+    <p>@Html.ActionLink("Add Flavor to Treat", "AddTreat", new {id = Model.FlavorId})</p>
+    <p>@Html.ActionLink("Delete Flavor", "Delete", new { id = Model.FlavorId})</p>
+    <p>@Html.ActionLink("Back to all flavors", "Index")</p>
+</div>

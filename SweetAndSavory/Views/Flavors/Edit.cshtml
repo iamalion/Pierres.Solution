@@ -1,0 +1,29 @@
+@{
+    Layout = "_Layout";
+}
+
+@model SweetAndSavory.Models.Flavor
+<div class="container">
+    <h1>Edit Flavor</h1>
+    <h4>Editing: @Html.DisplayFor(model => model.FlavorName)</h4>
+</div>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="form-container">
+        @Html.HiddenFor(model => model.FlavorId)
+        <div>
+            @Html.LabelFor(model => model.FlavorName)
+            @Html.EditorFor(model => model.FlavorName)
+        </div>
+    </div>
+    <div class="center">
+        <input type="submit" value="Save" class="button"/>
+    </div>
+    <div class="link-container">
+        <p>@Html.ActionLink("Delete Flavor", "Delete", new { id = Model.FlavorId })</p>
+        <p>@Html.ActionLink("Back to all flavors", "Index")</p>
+    </div>
+
+}
