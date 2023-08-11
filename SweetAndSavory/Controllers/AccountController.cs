@@ -28,37 +28,47 @@ namespace SweetAndSavory.Controllers
     {
       return View();
     }
-
-   [HttpPost]
+    [HttpPost]
     public async Task<ActionResult> Register(RegisterViewModel model, string role)
     {
-        if (!ModelState.IsValid)
+      if (!ModelState.IsValid)
         {
             return View(model);
         }
-        // if (role !="Admin" && !="Guest")
-        // {
-        //     ModelState.AddModeError("", "Please select a role.")
-        //     return View(Model);
-        // }
-        var user = new ApplicationUser { UserName = model.Email };
-        var result = await _userManager.CreateAsync(user, model.Password);
+    
+      if (role != "Admin" && role != "Guest")
+        {
+            ModelState.AddModelError("", "Please select a valid role.");
+            return View(model);
+        }
 
-    if (result.Succeeded)
-    {
-        await _userManager.AddToRoleAsync(user, role);
-        await _signInManager.SignInAsync(user, isPersistent: false);
-        return RedirectToAction("Index", "Home");
+      var user = new ApplicationUser { UserName = model.Email };
+      var result = await _userManager.CreateAsync(user, model.Password);
+
+      if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(user, role);
+            bool loginSuccess = await AutoLoginUserAsync(user.UserName);
+            if (loginSuccess)
+            {
+              return RedirectToAction("Index");
+            }
+            else 
+            {
+              return RedirectToAction("Login");
+            }
+        }
+        else 
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View(model);
+              
+        }
     }
-
-    foreach (var error in result.Errors)
-    {
-        ModelState.AddModelError("", error.Description);
-    }
-
-    return View(model);
-    }
-
+    
     public ActionResult Login()
     {
       return View();
@@ -84,6 +94,16 @@ namespace SweetAndSavory.Controllers
           return View(model);
         }
       }
+    }
+    private async Task<bool> AutoLoginUserAsync(string userEmail)
+    {
+        var user = await _userManager.FindByEmailAsync(userEmail);
+        if (user != null)
+        {
+            await _signInManager.SignInAsync(user, isPersistent: true);
+            return true;
+        }
+        return false;
     }
     [HttpPost]
     public async Task<ActionResult> LogOff()
