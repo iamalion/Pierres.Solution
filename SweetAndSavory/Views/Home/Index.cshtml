@@ -50,7 +50,7 @@
                     <li>
                         @if (User.IsInRole("Admin"))
                         {
-                            @Html.ActionLink($"Name: {treat.TreatName}", "Details", new { id = treat.TreatId })
+                            @Html.ActionLink($"{treat.TreatName}", "Details", new { id = treat.TreatId })
                         }
                         else
                         {
