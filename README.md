@@ -45,7 +45,11 @@ _Note: You will need to have the following installed locally before you can run 
 7. Still within the production directory, run `$ dotnet watch run` in the command line to launch the application in development mode in a browser, and interact with the application.
 
 ## Known Bugs
-- None at this time
+- Occasionally after adding a treat or a flavor, clicking on edit or delete will route to a 404 error. It's corrected after backing out to the main details page and waiting a few seconds
+
+## Future Considerations
+- Better navigation from page to page
+- Adding a "cancel" option when on the edit or delete page 
 
 ## MIT License
 Copyright (c) August 2023 Lindsay Warr
