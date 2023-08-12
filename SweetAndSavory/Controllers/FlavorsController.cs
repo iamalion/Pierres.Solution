@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace SweetAndSavory.Controllers
 {
-    [Authorize]
+   
     public class FlavorsController : Controller
     {
         private readonly SweetAndSavoryContext _db;
