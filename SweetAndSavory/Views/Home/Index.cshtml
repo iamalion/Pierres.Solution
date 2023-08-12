@@ -1,12 +1,64 @@
 @{
     Layout = "_Layout";
 }
+@using SweetAndSavory.Models
+
 <div class="container">
     <h1>Pierre's Bakery</h1>
 </div>
+<div class="container">
+    <h3>Flavors</h3>
+</div>
+
+@if (@Model["flavors"].Count == 0)
+{
+    <p>No flavors yet added</p>
+}
+<div class="splash-container">
+    <ul>
+        @foreach (Flavor flavor in Model["flavors"])
+        {
+            <li>
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink($"{flavor.FlavorName}", "Details", new { id = flavor.FlavorId })
+                }
+                else
+                {
+                    @flavor.FlavorName
+                }
+            </li>
+        }
+    </ul>
+</div>
+
+<div class="splash-container">
+    <h3>Treats</h3>
+</div>
+
+@if (@Model["treats"].Count == 0)
+{
+    <p>No treats yet added</p>
+}
+<div class="container">
+    <ul>
+        @foreach (Treat treat in Model["treats"])
+        {
+            <li>
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink($"Name: {treat.TreatName}", "Details", new { id = treat.TreatId })
+                }
+                else
+                {
+                    @treat.TreatName
+                }
+            </li>
+        }
+    </ul>
+</div>
 <hr />
 <div class="link-container">
-    @* <p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p> *@
         <p>@Html.ActionLink("Register", "Register", "Account")</p>
         <p>@Html.ActionLink("Log in", "Login", "Account")</p>
     </div>
